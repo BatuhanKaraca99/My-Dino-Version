@@ -11,10 +11,14 @@ public class GameManager : MonoBehaviour
     public float gameSpeed { get; private set; }
 
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI hiscoreText;
     public Button retryButton;
 
     private Player player;
     private Spawner spawner;
+
+    private float score; //score variable
 
     private void Awake()
     {
@@ -70,10 +74,15 @@ public class GameManager : MonoBehaviour
         spawner.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(true);
         retryButton.gameObject.SetActive(true);
+
+        score = 0;
     }
 
     private void Update()
     {
         gameSpeed += gameSpeedIncrease * Time.deltaTime;
+        score += gameSpeed * Time.deltaTime; //increase score
+        scoreText.text = Mathf.FloorToInt(score).ToString("D5"); //update text UI with converting float to int
+        //5 digits
     }
 }
