@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour
         spawner.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(false);
         retryButton.gameObject.SetActive(false);
+
+        UpdateHiscore();
     }
 
     public void GameOver()
@@ -75,6 +77,7 @@ public class GameManager : MonoBehaviour
         gameOverText.gameObject.SetActive(true);
         retryButton.gameObject.SetActive(true);
 
+        UpdateHiscore();
         score = 0;
     }
 
@@ -84,5 +87,18 @@ public class GameManager : MonoBehaviour
         score += gameSpeed * Time.deltaTime; //increase score
         scoreText.text = Mathf.FloorToInt(score).ToString("D5"); //update text UI with converting float to int
         //5 digits
+    }
+
+    private void UpdateHiscore()
+    {
+        float hiscore = PlayerPrefs.GetFloat("hiscore", 0);
+
+        if (score > hiscore)
+        {
+            hiscore = score;
+            PlayerPrefs.SetFloat("hiscore", hiscore);
+        }
+
+        hiscoreText.text = Mathf.FloorToInt(hiscore).ToString("D5"); //update
     }
 }
